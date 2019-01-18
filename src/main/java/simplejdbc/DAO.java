@@ -132,7 +132,7 @@ public class DAO {
 
 		return result;
 	}
-
+// nouvelle fonction
 	/**
 	 * Liste des clients localisés dans un état des USA
 	 *
