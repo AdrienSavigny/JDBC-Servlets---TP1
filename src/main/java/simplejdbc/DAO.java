@@ -169,5 +169,35 @@ public class DAO {
 		return result;
 
 	}
+        
+        
+                
 
+        
+        public List<String> customerInStateList() throws DAOException {
+		List<String> states = new LinkedList<>();   
+                String sql= "SELECT DISTINCT STATE FROM CUSTOMER";
+		// Syntaxe "try with resources" 
+		// cf. https://stackoverflow.com/questions/22671697/try-try-with-resources-and-connection-statement-and-resultset-closing
+		try (   Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+			Statement stmt = connection.createStatement(); // On crée un statement pour exécuter une requête
+			ResultSet rs = stmt.executeQuery(sql) // Un ResultSet pour parcourir les enregistrements du résultat
+		) {
+			while (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
+				// On récupère le champ NUMBER de l'enregistrement courant
+				String stateName = rs.getString("STATE");
+                                states.add(stateName);
+                                
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
+
+		return states;
+	}
 }
+
+
+
+
